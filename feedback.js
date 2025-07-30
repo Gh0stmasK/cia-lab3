@@ -1,5 +1,3 @@
-// feedback.js
-
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('feedbackForm');
     const feedbackList = document.getElementById('feedbackList');
@@ -7,20 +5,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const comments = document.getElementById('comments');
     const clearBtn = document.getElementById('clearBtn');
     const welcomeBack = document.getElementById('welcomeBack');
-
-    // Show welcome back if sessionStorage flag is set
     if (sessionStorage.getItem('visited')) {
         welcomeBack.classList.remove('hidden');
     } else {
         sessionStorage.setItem('visited', 'true');
     }
-
-    // Real-time character count
     comments.addEventListener('input', function () {
         charCount.textContent = comments.value.length;
     });
 
-    // Load and display feedbacks
     function loadFeedbacks() {
         feedbackList.innerHTML = '';
         const feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
@@ -44,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Form submission
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         const name = document.getElementById('name').value.trim();
@@ -52,13 +44,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const department = document.getElementById('department').value;
         const rating = form.rating.value;
         const commentsVal = comments.value.trim();
-
-        // Email validation
         if (!/^\S+@\S+\.\S+$/.test(email)) {
             alert('Please enter a valid email address.');
             return;
         }
-
         const feedback = { name, email, department, rating: Number(rating), comments: commentsVal };
         let feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
         feedbacks.push(feedback);
